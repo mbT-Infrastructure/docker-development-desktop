@@ -1,0 +1,12 @@
+# folders
+.idea
+.vscode
+builds
+data-local
+node_modules
+target
+test-results
+
+# files
+.iml
+package-lock.json

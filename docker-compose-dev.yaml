@@ -1,0 +1,13 @@
+version: "3.8"
+
+services:
+
+    desktop:
+        container_name: desktop
+        build: .
+        environment:
+            - AUTHORIZED_PUBLIC_KEYS=
+        volumes:
+            - "./data-local:/media/user"
+        ports:
+            - "22:22"
