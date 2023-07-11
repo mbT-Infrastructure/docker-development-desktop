@@ -4,7 +4,7 @@ set -e
 BUILD_ARGUMENTS=()
 DEPENDENCIES=(docker)
 UPDATE_BASE=false
-REPOSIITORY_NAME="docker-desktop"
+REPOSIITORY_NAME="docker-development-desktop"
 
 # help message
 for ARGUMENT in "$@"; do
