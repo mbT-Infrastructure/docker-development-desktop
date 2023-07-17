@@ -7,7 +7,10 @@ services:
         build: .
         environment:
             - AUTHORIZED_PUBLIC_KEYS=
+            - MESHCENTRAL_DOMAIN=
+            - MESHCENTRAL_GROUP_ID=
         volumes:
             - "./data-local:/media/user"
         ports:
             - "22:22"
+            - "8900:5900"

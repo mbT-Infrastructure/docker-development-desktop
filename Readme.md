@@ -1,10 +1,23 @@
 # Docker development desktop image
 
 This Docker image extends the
-[development image](https://github.com/mbT-Infrastructure/docker-development)
+[development image](https://github.com/mbT-Infrastructure/docker-development).
+Make sure to also configure environment variables, ports and volumes from that image.
 by some applications with graphical user interface.
 
-To use them, it allows X11Forwarding over ssh.
+It allows connection via Meshcentral, ssh with X11Forwarding and VNC.
+
+## Environment variables
+
+- `DISPLAY_RESOLUTION`
+    - The resolution of the virtual display, default: `1280x720`.
+- `MESHCENTRAL_DOMAIN`
+    - Domain of the meshcentral instance to connect to.
+- `MESHCENTRAL_GROUP_ID`
+    - Group id of the Meshcentral device group.
+- `USER_PASSWORD`
+    - Password used to authenticate the user via VNC.
+
 
 ## Development
 
