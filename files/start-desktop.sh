@@ -3,7 +3,7 @@ set -e
 
 PIDS=()
 
-if [[ -n "" ]]; then
+if [[ -n "$AUTHORIZED_PUBLIC_KEYS" ]]; then
     echo "Start sshd."
     /usr/sbin/sshd -D -e &
     PIDS+=("$!")
