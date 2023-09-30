@@ -1,7 +1,7 @@
 FROM madebytimo/development
 
 RUN install-autonomous.sh install Chromium DesktopBasics Firefox GoogleChrome IntellijIdea \
-        UnityHub VSCode && \
+    ScriptsDesktop UnityHub VSCode && \
     apt update -qq && apt install -y -qq cinnamon dbus dbus-x11 x11vnc xserver-xorg-video-dummy && \
     rm -rf /var/lib/apt/lists/*
 
