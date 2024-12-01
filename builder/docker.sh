@@ -70,4 +70,5 @@ OUTPUT_FILE="builds/${IMAGE//"/"/-}-${VERSION}-oci.tar"
 docker buildx build "${BUILD_ARGUMENTS[@]}" --output \
     "type=oci,dest=${OUTPUT_FILE},compression=zstd,compression-level=19,force-compression=true" \
     --tag "${IMAGE}:latest" --tag "${IMAGE}:${VERSION}" \
-    --tag "${IMAGE}:${VERSION}-base-${BASE_IMAGE_DATE}" .
+    --tag "${IMAGE}:${VERSION}-base-${BASE_IMAGE_DATE}" . \
+    --build-arg "MESHCENTRAL_URL=$MESHCENTRAL_URL"

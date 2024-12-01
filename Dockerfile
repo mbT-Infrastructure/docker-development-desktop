@@ -1,8 +1,8 @@
 FROM madebytimo/development
 
+ARG MESHCENTRAL_URL
+
 COPY files/locale.gen /etc/locale.gen
-COPY --from=madebytimo/development-desktop:v0.0.1-base-2023-07-11 /opt/meshinstall.sh \
-    /opt/meshinstall.sh
 
 RUN apt update -qq && apt install -y -qq cinnamon dbus dbus-x11 xserver-xorg-video-dummy \
     && install-autonomous.sh install AndroidStudio Chromium DBeaver DesktopBasics Firefox \
@@ -10,10 +10,12 @@ RUN apt update -qq && apt install -y -qq cinnamon dbus dbus-x11 xserver-xorg-vid
     && rm -rf /var/lib/apt/lists/* \
     \
     && locale-gen \
-    && chmod +x /opt/meshinstall.sh \
     && usermod --append --groups audio,video,plugdev,netdev,bluetooth,lp,scanner user \
     && echo "X11Forwarding yes" >> /etc/ssh/sshd_config \
-    && echo "X11UseLocalhost no" >> /etc/ssh/sshd_config
+    && echo "X11UseLocalhost no" >> /etc/ssh/sshd_config \
+    && download.sh --silent --output /opt/meshinstall.sh \
+        "https://${MESHCENTRAL_URL#*://}/meshagents?script=1" \
+    && chmod +x /opt/meshinstall.sh
 
 COPY files/xorg-dummy.conf /app/templates/xorg-dummy.conf
 COPY --chown=user files/autostart /media/user/.config/autostart

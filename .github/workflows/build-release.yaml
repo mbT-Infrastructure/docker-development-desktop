@@ -64,6 +64,8 @@ jobs:
                   else
                       builder/build.sh
                   fi
+              env:
+                  MESHCENTRAL_URL: ${{ secrets.MESHCENTRAL_URL }}
             - name: Build update base
               if: ${{ github.event_name == 'schedule'}}
               run: builder/build.sh --publish --update-base
