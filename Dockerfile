@@ -5,8 +5,8 @@ ARG MESHCENTRAL_URL
 COPY files/locale.gen /etc/locale.gen
 
 RUN apt update -qq && apt install -y -qq cinnamon dbus dbus-x11 xserver-xorg-video-dummy \
-    && install-autonomous.sh install AndroidStudio Chromium DBeaver DesktopBasics Firefox \
-    IntellijIdea ScriptsDesktop UnityHub VncServer VSCode \
+    && install-autonomous.sh install AndroidStudio Bruno Chromium DBeaver DesktopBasics Firefox \
+    Godot IntellijIdea ScriptsDesktop UnityHub VncServer VSCode \
     && rm -rf /var/lib/apt/lists/* \
     \
     && locale-gen \

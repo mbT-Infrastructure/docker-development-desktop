@@ -32,7 +32,8 @@ jobs:
                   if (ls /media/saved-cache/*.tar.zst); then
                       docker run --pull always --rm \
                           --volume "/media/saved-cache:/media/saved-cache" \
-                          --volume "docker-development-desktop-build-cache:/media/build-cache" \
+                          --volume \
+                          "docker-development-desktop-build-cache:/media/build-cache" \
                           --workdir /media \
                           madebytimo/scripts \
                           compress.sh --decompress /media/saved-cache/*.tar.zst
@@ -64,8 +65,6 @@ jobs:
                   else
                       builder/build.sh
                   fi
-              env:
-                  MESHCENTRAL_URL: ${{ secrets.MESHCENTRAL_URL }}
             - name: Build update base
               if: ${{ github.event_name == 'schedule'}}
               run: builder/build.sh --publish --update-base
@@ -84,7 +83,8 @@ jobs:
               run: |
                   docker run --pull always --rm \
                       --volume "/media/saved-cache:/media/saved-cache" \
-                      --volume "docker-development-desktop-build-cache:/media/build-cache" \
+                      --volume \
+                      "docker-development-desktop-build-cache:/media/build-cache" \
                       madebytimo/scripts \
                       compress.sh --fast --output /media/saved-cache/build-cache /media/build-cache
                   sudo chown -R "$(whoami)" /media/saved-cache
