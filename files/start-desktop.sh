@@ -4,8 +4,7 @@ set -e
 PIDS=()
 
 if [[ -n "$AUTHORIZED_PUBLIC_KEYS" ]]; then
-    echo "Start sshd."
-    /usr/sbin/sshd -D -e &
+    run-sshd.sh &
     PIDS+=("$!")
 fi
 

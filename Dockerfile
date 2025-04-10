@@ -21,15 +21,18 @@ COPY files/xorg-dummy.conf /app/templates/xorg-dummy.conf
 COPY --chown=user files/autostart /media/user/.config/autostart
 
 ENV DBUS_SESSION_BUS_ADDRESS="unix:path=/run/user/bus"
-ENV DISPLAY_RESOLUTION="1280x720"
+ENV DISPLAY_RESOLUTION="1920x1080"
 ENV DISPLAY=":0"
-ENV LANG="de_DE.UTF-8"
+ENV LANG="en_US.UTF-8"
 ENV MESHCENTRAL_DOMAIN=""
 ENV MESHCENTRAL_GROUP_ID=""
 ENV USER_PASSWORD=""
 
-RUN mv /entrypoint.sh /entrypoint-development.sh
-COPY files/entrypoint.sh files/start-desktop.sh /usr/local/bin/
+RUN mv /usr/local/bin/entrypoint.sh /usr/local/bin/entrypoint-development.sh
+COPY files/entrypoint.sh files/healthcheck.sh files/start-desktop.sh /usr/local/bin/
+
 
 ENTRYPOINT [ "entrypoint.sh" ]
 CMD [ "start-desktop.sh" ]
+
+HEALTHCHECK CMD [ "healthcheck.sh" ]
