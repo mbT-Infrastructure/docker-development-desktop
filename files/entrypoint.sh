@@ -10,4 +10,4 @@ if [[ -n "$MESHCENTRAL_DOMAIN" ]] && [[ -n "$MESHCENTRAL_GROUP_ID" ]]; then
     rm meshagent meshagent.msh
 fi
 
-entrypoint-development.sh "$@"
+exec entrypoint-development.sh "$@"
