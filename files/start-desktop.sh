@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-set -e
+set -e -o pipefail
 
 PIDS=()
 
@@ -23,7 +23,7 @@ PIDS+=("$!")
 
 if [[ -n "$USER_PASSWORD" ]]; then
     echo "Start VNC server."
-    x11vnc -forever -passwd "$USER_PASSWORD" -quiet -shared -xrandr &
+    vnc-server.sh --password "$USER_PASSWORD" --read-write &
     PIDS+=("$!")
 fi
 
