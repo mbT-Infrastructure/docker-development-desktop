@@ -9,16 +9,17 @@ if [[ -n "$AUTHORIZED_PUBLIC_KEYS" ]]; then
 fi
 
 echo "Creating virtual display."
+export XDG_SESSION_TYPE=x11
 rm -f /tmp/.X0-lock
 Xorg "$DISPLAY" &
 PIDS+=("$!")
 
 echo "Start dbus."
-dbus-daemon --address="$DBUS_SESSION_BUS_ADDRESS" --session &
-PIDS+=("$!")
+sudo --user user dbus-daemon --address="$DBUS_SESSION_BUS_ADDRESS" --fork --nopidfile --session
 
 echo "Start desktop."
-sudo --user user cinnamon-session &
+sudo --preserve-env=DBUS_SESSION_BUS_ADDRESS,XDG_SESSION_TYPE --user user \
+    cinnamon-session &
 PIDS+=("$!")
 
 if [[ -n "$USER_PASSWORD" ]]; then

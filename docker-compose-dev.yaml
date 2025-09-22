@@ -4,13 +4,17 @@ services:
 
     desktop:
         container_name: desktop
-        build: .
+        build:
+            context: .
+            args:
+                - MESHCENTRAL_URL=$MESHCENTRAL_URL
         environment:
             - AUTHORIZED_PUBLIC_KEYS=
             - MESHCENTRAL_DOMAIN=
             - MESHCENTRAL_GROUP_ID=
+            - USER_PASSWORD=admin
         volumes:
             - "./data-local:/media/user"
         ports:
-            - "127.0.0.1:22:22"
+            - "127.0.0.1:8022:22"
             - "127.0.0.1:8900:5900"
