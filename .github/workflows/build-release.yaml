@@ -55,10 +55,15 @@ jobs:
             - name: Prepare environment
               run: |
                   if [[ -f builder/docker.sh ]]; then
-                      docker buildx create --use
+                      curl --silent --location --output ~/buildkitd-gha.toml \
+                          "https://github.com/mbT-Infrastructure/template-config-files/raw/refs/\
+                  heads/main/debian/buildkit/buildkitd-gha.toml"
+                      docker buildx create --buildkitd-config ~/buildkitd-gha.toml --use
                   fi
             - name: Build
               if: ${{ github.event_name != 'schedule'}}
+              env:
+                  MESHCENTRAL_URL: ${{ secrets.MESHCENTRAL_URL }}
               run: |
                   if [[ ${{ github.ref }} == 'refs/heads/main' ]]; then
                       builder/build.sh --publish
@@ -67,12 +72,21 @@ jobs:
                   fi
             - name: Build update base
               if: ${{ github.event_name == 'schedule'}}
+              env:
+                  MESHCENTRAL_URL: ${{ secrets.MESHCENTRAL_URL }}
               run: builder/build.sh --publish --update-base
             - name: Upload
               uses: actions/upload-artifact@v4
               with:
                   name: ${{ env.version }}
                   path: builds/*
+            - name: Prepare release files
+              if: ${{ github.ref == 'refs/heads/main' && env.latest_version != env.version }}
+              run: |
+                  docker run --pull missing --rm --volume "${PWD}/builds:/media/workdir" \
+                  madebytimo/scripts bash -c \
+                  "split-big-files.sh --size 2147483647 --replace --output /media/workdir \
+                  /media/workdir/*"
             - name: Release
               if: ${{ github.ref == 'refs/heads/main' && env.latest_version != env.version }}
               uses: softprops/action-gh-release@v2
@@ -81,7 +95,7 @@ jobs:
                   tag_name: ${{ env.version }}
             - name: Export cache
               run: |
-                  docker run --pull always --rm \
+                  docker run --pull missing --rm \
                       --volume "/media/saved-cache:/media/saved-cache" \
                       --volume \
                       "docker-development-desktop-build-cache:/media/build-cache" \
