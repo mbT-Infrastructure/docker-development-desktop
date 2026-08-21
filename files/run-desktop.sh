@@ -3,11 +3,6 @@ set -e -o pipefail
 
 PIDS=()
 
-if [[ -n "$AUTHORIZED_PUBLIC_KEYS" ]]; then
-    run-sshd.sh &
-    PIDS+=("$!")
-fi
-
 echo "Creating virtual display."
 export XDG_SESSION_TYPE=x11
 rm -f /tmp/.X0-lock

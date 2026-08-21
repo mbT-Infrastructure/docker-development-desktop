@@ -29,10 +29,11 @@ ENV MESHCENTRAL_DOMAIN=""
 ENV MESHCENTRAL_GROUP_ID=""
 ENV USER_PASSWORD=""
 
-COPY files/entrypoint-desktop.sh files/healthcheck.sh files/start-desktop.sh /usr/local/bin/
+COPY files/entrypoint-desktop.sh files/healthcheck-desktop.sh files/run-desktop.sh \
+    /usr/local/bin/
 
 
 ENTRYPOINT [ "entrypoint-desktop.sh" ]
-CMD [ "start-desktop.sh" ]
+CMD [ "run-parallel.sh", "run-docker.sh", "run-sshd.sh", "run-desktop.sh" ]
 
-HEALTHCHECK CMD [ "healthcheck.sh" ]
+HEALTHCHECK CMD [ "bash", "-c", "healthcheck-sshd.sh && healthcheck-desktop.sh" ]

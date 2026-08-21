@@ -1,9 +1,7 @@
 # Docker development desktop image
 
-This Docker image extends the
-[development image](https://github.com/mbT-Infrastructure/docker-development).
-Make sure to also configure environment variables, ports and volumes from that image.
-by some applications with graphical user interface.
+This Docker image extends the [development image] by some applications with graphical user
+interface. Make sure to also configure environment variables, ports and volumes from that image.
 
 It allows connection via Meshcentral, ssh with X11Forwarding and VNC.
 
@@ -18,10 +16,12 @@ It allows connection via Meshcentral, ssh with X11Forwarding and VNC.
 - `USER_PASSWORD`
     - Password used to authenticate the user via VNC.
 
-
 ## Development
 
 To build and run for development run:
+
 ```bash
 docker compose --file docker-compose-dev.yaml up --build
 ```
+
+[development image]: https://github.com/mbT-Infrastructure/docker-development

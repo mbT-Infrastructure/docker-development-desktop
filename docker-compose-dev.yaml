@@ -1,5 +1,3 @@
-version: "3.8"
-
 services:
 
     desktop:
@@ -8,11 +6,15 @@ services:
             context: .
             args:
                 - MESHCENTRAL_URL=$MESHCENTRAL_URL
+        mem_limit: 2G
         environment:
             - AUTHORIZED_PUBLIC_KEYS=
             - MESHCENTRAL_DOMAIN=
             - MESHCENTRAL_GROUP_ID=
             - USER_PASSWORD=admin
+        tmpfs:
+            - /etc/X11/xorg.conf.d:size=16M
+            - /tmp:exec
         volumes:
             - "./data-local:/media/user"
         ports:
