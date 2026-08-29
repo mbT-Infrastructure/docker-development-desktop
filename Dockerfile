@@ -36,4 +36,5 @@ COPY files/entrypoint-desktop.sh files/healthcheck-desktop.sh files/run-desktop.
 ENTRYPOINT [ "entrypoint-desktop.sh" ]
 CMD [ "run-parallel.sh", "run-docker.sh", "run-sshd.sh", "run-desktop.sh" ]
 
-HEALTHCHECK CMD [ "bash", "-c", "healthcheck-sshd.sh && healthcheck-desktop.sh" ]
+HEALTHCHECK CMD [ "bash", "-c", \
+    "healthcheck-docker.sh && healthcheck-desktop.sh && healthcheck-sshd.sh" ]
