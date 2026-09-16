@@ -13,8 +13,7 @@ echo "Start dbus."
 sudo --user user dbus-daemon --address="$DBUS_SESSION_BUS_ADDRESS" --fork --nopidfile --session
 
 echo "Start desktop."
-sudo --preserve-env=DBUS_SESSION_BUS_ADDRESS,XDG_SESSION_TYPE --user user \
-    cinnamon-session &
+su user --login --command "cinnamon-session" &
 PIDS+=("$!")
 
 if [[ -n "$USER_PASSWORD" ]]; then
